@@ -20,7 +20,7 @@ public class SortingVisualizer extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        numbers = readNumbersFromFile("BestCase.txt");
+        numbers = readNumbersFromFile("worstCase.txt");
         originalNumbers = Arrays.copyOf(numbers, numbers.length);
         barPanel = new BarPanel(numbers);
         add(barPanel, BorderLayout.CENTER);
