@@ -47,5 +47,37 @@ public class SortingVisualizer extends JFrame {
         setVisible(true);
     }
 
+ 
+    private void startSorting() {
+        String algo = (String) algorithmSelector.getSelectedItem();
+        int[] arr = Arrays.copyOf(numbers, numbers.length);
+
+        new Thread(() -> {
+            try {
+                switch (algo) {
+                    case "Bubble Sort":
+                        SortAlgorithms.bubbleSort(arr, barPanel);
+                        break;
+                    case "Selection Sort":
+                        SortAlgorithms.selectionSort(arr, barPanel);
+                        break;
+                    case "Insertion Sort":
+                        SortAlgorithms.insertionSort(arr, barPanel);
+                        break;
+                    case "Merge Sort":
+                        SortAlgorithms.mergeSort(arr, barPanel);
+                        break;
+                    case "Quick Sort":
+                        SortAlgorithms.quickSort(arr, barPanel);
+                        break;
+                }
+                numbers = Arrays.copyOf(arr, arr.length);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        }).start();
+    }
+
+   
 } 
  
