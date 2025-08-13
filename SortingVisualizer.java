@@ -78,6 +78,51 @@ public class SortingVisualizer extends JFrame {
         }).start();
     }
 
+  private void saveSortedOutput() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("sorted_output.txt"))) {
+            for (int i = 0; i < numbers.length; i++) {
+                writer.write(String.valueOf(numbers[i]));
+                if (i < numbers.length - 1) writer.write(",");
+            }
+            JOptionPane.showMessageDialog(this, "Sorted output saved to sorted_output.txt");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error saving file!", "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    private void resetArray() {
+        numbers = Arrays.copyOf(originalNumbers, originalNumbers.length);
+        barPanel.updateArray(numbers);
+    }
+
+    private int[] readNumbersFromFile(String filename) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            String line = reader.readLine();
+            if (line == null || line.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "num.txt is empty!", "Error", JOptionPane.ERROR_MESSAGE);
+                return new int[0];
+            }
+            String[] tokens = line.split(",");
+            int[] nums = new int[tokens.length];
+            for (int i = 0; i < tokens.length; i++) {
+                nums[i] = Integer.parseInt(tokens[i].trim());
+            }
+            reader.close();
+            return nums;
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "num.txt not found!", "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            return new int[0];
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(SortingVisualizer::new);
+    }
+ 
+
    
 } 
  
